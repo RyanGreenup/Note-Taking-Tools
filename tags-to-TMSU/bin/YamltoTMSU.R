@@ -55,17 +55,21 @@ if(require('dplyr')){
 ########################################################################################
 
 args <- commandArgs(trailingOnly = TRUE)
+
 if (length(args)!=0) {
   if (args[1]=="--help" | args[1]=="-h") {
       print("First Argument should be the notes parent directory,
           this will go through all MD files, extract the yaml
            tags and save them in tmp`")
   } else {
-      setwd(args[1])
+      DIR <- args[1]
   }
 } else {
-  setwd("~/Notes/MD/notes")
+      DIR <- "~/Notes/MD/notes"
 }
+setwd(DIR)
+
+
 
 
 #### List all the Notes with a YAML Header =======================================
@@ -126,11 +130,17 @@ EndTime <- Sys.time()
 tagVector <- as.matrix(tagVector)
 tagVector <- paste("tmsu tag", tagVector)
 
+#### Add a CD Command
+tagVector <- c(paste('cd', DIR), tagVector)
+tagVector <- c("#!/bin/bash", tagVector)
+
+
 #### Write to a CSV ===============================================================
 # Write a document containing all the tags
 
-fileLocation  <- "/tmp/00tags.csv"
-write.csv(tagVector, file = fileLocation, quote = FALSE, row.names = FALSE)
+fileLocation  <- "/tmp/00tags.sh"
+write.table(tagVector, file = fileLocation, quote = FALSE,
+            row.names = FALSE, col.names = FALSE)
 
 ## Tell the user that it worked
 print(paste("Output saved to", fileLocation))

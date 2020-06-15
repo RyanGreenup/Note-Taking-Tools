@@ -26,7 +26,10 @@ In order to pass`#tags` to *TMSU* run the following (assuming `~/bin` is in your
 
 ```bash
 cd ~/Notes/MD/notes
-hashtags.sh 
+hashtags.sh
+
+## Alternatively
+## hashtags.sh /path/to/notes
 ```
 After reviewing the output, pipe it into `bash`/`zsh`:
 
@@ -53,7 +56,9 @@ cat /tmp/00tags.csv | bash
 
 ### Automated Script
 
-Alternatively you can perform all of this from a script, but in the unlikel scenario where there is *dangerous* text inside your tags (e.g. `rm -rf` or `chown -R`) this may cause grief so be careful:
+Alternatively you can perform all of this from a script, but in the unlikel
+scenario where there is *dangerous* text inside your tags (e.g. `rm -rf` or
+`chown -R`) this may cause grief so be careful:
 
 ```bash
 tags-to-TMSU.sh ~/Notes/MD/notes
