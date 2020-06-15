@@ -24,11 +24,13 @@ if [ $choice == 'y' ]; then
     cat /tmp/00tags.csv | bash
 elif [ $choice == 't' ]; then
     echo "Option $choice selected" #FIXME
-  ./bin/hashtags.sh $NOTE_DIR | bash
+   cd $NOTE_DIR
+  ./bin/hashtags.sh | bash
 elif [ $choice == 'b' ]; then
     echo "Option $choice selected" #FIXME
     ## Implement HashTags
-    ./bin/hashtags.sh $NOTE_DIR| bash
+   cd $NOTE_DIR
+  ./bin/hashtags.sh | bash
 
     ## Implement YAML Tags
     RScript ./bin/YamltoTMSU.R $NOTE_DIR
@@ -38,3 +40,6 @@ elif [ $choice == 'h' ]; then
 else
     echo 'Please enter y/t/b'
 fi
+
+echo 'Tags Generated Successfully'
+exit 0

@@ -18,15 +18,44 @@ Copy the following files into `~/bin`:
 
 ## How to use
 
+### Initialize TMSU
 First go to your notes directory and initialise a tmsu database with `tmsu init`.
 
+### `#`tags
 In order to pass`#tags` to *TMSU* run the following (assuming `~/bin` is in your PATH):
 
 ```bash
-hashtags.sh ~/Notes/MD
+cd ~/Notes/MD/notes
+hashtags.sh 
 ```
-After reviewing the output, 
+After reviewing the output, pipe it into `bash`/`zsh`:
 
-TODO If I pipe this to bash, it needs be run from the same directory anyway right? so taking the path as an argument is arguably misleading
+```bash
+cd ~/Notes/MD/notes
+hashtags.sh | bash
+```
 
-In order to pass `YAML` tags to *TMSU*
+### *YAML* Tags
+
+In order to pass `YAML` tags to *TMSU* use the **_R_***-*Script*:
+
+```bash
+Rscript ~/bin/YamltoTMSU.R ~/Notes/MD/notes
+cat /tmp/00tags.csv
+```
+
+After reviewing the output pipe it into bash:
+
+```bash
+Rscript ~/bin/YamltoTMSU.R ~/Notes/MD/notes
+cat /tmp/00tags.csv | bash
+```
+
+### Automated Script
+
+Alternatively you can perform all of this from a script, but in the unlikel scenario where there is *dangerous* text inside your tags (e.g. `rm -rf` or `chown -R`) this may cause grief so be careful:
+
+```bash
+tags-to-TMSU.sh ~/Notes/MD/notes
+```
+
