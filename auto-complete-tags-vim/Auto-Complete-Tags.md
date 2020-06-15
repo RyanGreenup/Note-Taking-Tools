@@ -37,7 +37,7 @@ imap <expr> <C-c><C-y> fzf#vim#complete('node ~/bin/printMarkdownTags/yaml-parse
 imap <expr> <C-c><C-t> fzf#vim#complete('rg --pcre2 "\s#[a-zA-Z-@]+\s" -o --no-filename $HOME/Notes/MD -t md \| sort -u')
 ```
 
-4. Open a fresh vim instance, open a markdown file and hit `C-c C-y`, you should get a popup of all the yaml tags in the notes folder.
+4. Open a fresh vim instance, open a markdown file and hit `C-c C-y`, you should get a popup of all the yaml tags in the notes folder, ` C-c C-t ` will offer a popup of ` #tags ` like in [*iaWriter*](https://ia.net/writer), [Zettlr](https://github.com/Zettlr/Zettlr) or [Obsidian](https://obsidian.md/features)
 
 ### Demo
 
@@ -61,7 +61,7 @@ I initially tried this in **_R_** because I didn't actually know any *JavaScript
 
 ```vim
 "" RScript to give tags to FZF
-imap <expr> <C-c><C-r> fzf#vim#complete('Rscript ~/bin/ListTags.R >  /dev/null 2>&1; cat /tmp/00tags.csv')
+imap <expr> <C-c><C-r> fzf#vim#complete('Rscript ~/bin/printMarkdownTags/ListTags.R >  /dev/null 2>&1; cat /tmp/00tags.csv')
 ```
 
 
