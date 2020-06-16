@@ -38,14 +38,14 @@ elif [ $choice == 't' ]; then
 
     ## Print the TMSU commands to run to STDOUT (including a CD)
     ## Pipe these back to bash
-  ./hashtags.sh $NOTE_DIR | bash
+  bash ./hashtags.sh $NOTE_DIR 
 elif [ $choice == 'b' ]; then
     echo "Option $choice selected" #FIXME
     ## TODO this should maybe loop back around ?
     ## I should restructure this with functions anyway.
 
     ## Implement HashTags
-   ./hashtags.sh $NOTE_DIR | bash
+    bash ./hashtags.sh $NOTE_DIR
 
     ## Implement YAML Tags
     Rscript ./YamltoTMSU.R $NOTE_DIR
