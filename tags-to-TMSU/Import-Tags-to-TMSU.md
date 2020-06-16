@@ -74,6 +74,7 @@ Choose the tags you'd like generated and then after they've generated mount the 
 cd ~/Notes/MD/notes
 mkdir ../tags
 tmsu mount ../tags
+ranger ../tags/tags
 ```
 and unmount with
 
