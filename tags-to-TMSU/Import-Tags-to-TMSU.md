@@ -117,7 +117,7 @@ hashtags.sh | bash
 
 ### *YAML* Tags
 
-In order to pass `YAML` tags to *TMSU* use the **_R_***-*Script*:
+In order to pass `YAML` tags to *TMSU* use the **_R_**-*Script*:
 
 ```bash
 Rscript ~/bin/YamltoTMSU.R ~/Notes/MD/notes
