@@ -50,7 +50,21 @@ alternatively call it in the same location as the notes.
 ```bash
 tags-to-TMSU.sh ~/Notes/MD/notes
 ```
-Choose option `n` at first to initialize the *TMSU* Repo
+> Choose option `n` at first to initialize the *TMSU* Repo
+
+Choose the tags you'd like generated and then after they've generated mount the tmsu database with:
+
+```bash
+cd ~/Notes/MD/notes
+mkdir ../tags
+tmsu mount ../tags
+```
+and unmount with
+
+```bash
+tmsu umount ../tags
+## fusermount -uz ../tags ## If the above fails
+```
 
 ## Running the Scripts Manually (Recommended)
 
