@@ -6,11 +6,12 @@ This collection of scripts will take tags from your MD notes and pass them to *T
 
 Currently this works for:
 
-* YAML tags (think Notable and WikiJS [^1]) 
+* YAML tags (think Notable and WikiJS ) 
+    * Currently WikiJS tags are broken, [see this issue here](https://github.com/Requarks/wiki/issues/1997)
 * `#tags` (think Zettlr and Obsidian) 
-* There is no support for `:tags` like Vimwiki, this shouldn't be hard to implement though.
+* There is no support for `:tags:` like Vimwiki, this shouldn't be hard to implement though.
 
-[^1]: Currently WikiJS tags are broken, [see this issue here](https://github.com/Requarks/wiki/issues/1997)
+
 
 This screenshot provides an example of how this works:
 
