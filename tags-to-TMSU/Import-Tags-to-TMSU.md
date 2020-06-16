@@ -76,10 +76,12 @@ Choose the tags you'd like generated and then after they've generated mount the 
 
 ```bash
 cd ~/Notes/MD/notes
-mkdir ../tags
-tmsu mount ../tags
-ranger ../tags/tags
+mkdir /tmp/tags
+tmsu mount /tmp/tags
+ranger /tmp/tags/tags
 ```
+> :warning: DO NOT Mount the TMSU directory under *Dropbox*, it causes headaches.
+
 and unmount with
 
 ```bash
