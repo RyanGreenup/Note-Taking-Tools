@@ -8,6 +8,7 @@ fi
 
 echo 'Which Type of tags would you like to import to TMSU create (1/2/3)?
 
+n ::  New TMSU DB
 y ::  YAML Tags
 t ::  #Tags
 b ::  Both
@@ -51,6 +52,10 @@ elif [ $choice == 'b' ]; then
 
     cd $NOTE_DIR
     bash /tmp/00tags.sh
+elif [ $choice == 'n' ]; then
+    echo "Option $choice selected" #FIXME
+    cd $NOTE_DIR
+    tmsu init
 elif [ $choice == 'x' ]; then
     echo 'Attempting to Remove TMSU DB
                                       '
@@ -62,7 +67,7 @@ elif [ $choice == 'x' ]; then
      tmsu init
     echo "TMSU Database Reset"
     else
-      echo "No Database Found
+      echo "No Database Found, Make one with option n
                               "
     fi
 
