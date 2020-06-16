@@ -7,7 +7,7 @@ Tools to Facilitate MD Note Taking, Intended to integrate with Notable.
 
 ## Tags
 
-* [Import tags into TMSU](/tags-to-TMSU/Import-Tags-to-TMSU.md) <sub> Some Rouch Methods to avoid TMSU [can be found here](./Tag-Filter/Tag-Filter.md)</sub>
+* [Import tags into TMSU](/tags-to-TMSU/Import-Tags-to-TMSU.md) <sub> Some Rough Methods to avoid TMSU [can be found here](./Tag-Filter/Tag-Filter.md)</sub>
 
 ## Searching
 
