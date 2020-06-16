@@ -32,7 +32,7 @@ So for example:
 mkdir -p ~/DotFiles/Note-Taking-Tools
 git clone https://github.com/RyanGreenup/Note-Taking-Tools ~/DotFiles/Note-Taking-Tools
 cd ~/DotFiles
-stow -t $HOME -S Note-Taking-Tools
+stow -t $HOME -S Note-Taking-Tools/tags-to-TMSU
 ```
 
 ## How to use
