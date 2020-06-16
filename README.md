@@ -10,7 +10,7 @@ Tools to Facilitate MD Note Taking, Intended to integrate with Notable.
 * [Import tags into TMSU](/tags-to-TMSU/Import-Tags-to-TMSU.md)
 * [TODO Methods to work with Tags Without TMSU]()
 
-## TODO Searching
+## Searching
 
-* [Search Engine](Terminal-Skim-Recoll/Terminal-Skim-Recoll.md)
-* [RipGrep]()
+* [Search Engine with Recoll](Terminal-Skim-Recoll/Terminal-Skim-Recoll.md)
+* [TODO RipGrep]()
