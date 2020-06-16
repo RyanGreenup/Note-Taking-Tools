@@ -27,7 +27,7 @@ if [ $choice == 'y' ]; then
     echo "Option $choice selected"
 
     ## Make a File in /tmp/00tags.sh listing the tmsu commands to run
-    Rscript ./YamltoTMSU.R $NOTE_DIR
+    Rscript ~/bin/YamltoTMSU.R $NOTE_DIR ## Assumption that RScript is in ~/bin
 
     ## Change into the notes dir and run those commands
     cd $NOTE_DIR
@@ -48,7 +48,7 @@ elif [ $choice == 'b' ]; then
     hashtags.sh $NOTE_DIR | bash  ## Assumption that hashtags.sh is in PATH
 
     ## Implement YAML Tags
-    Rscript ./YamltoTMSU.R $NOTE_DIR
+    Rscript ~/bin/YamltoTMSU.R $NOTE_DIR ## Assumption that RScript is in ~/bin
 
     cd $NOTE_DIR
     bash /tmp/00tags.sh
