@@ -37,10 +37,6 @@ stow -t $HOME -S tags-to-TMSU
 
 ## How to use
 
-### Initialize TMSU
-
-First go to your notes directory and initialise a tmsu database with `tmsu init`.
-
 ### Automated Script
 
 You can use this from an automatic script, but, but in the unlikely
@@ -54,6 +50,7 @@ alternatively call it in the same location as the notes.
 ```bash
 tags-to-TMSU.sh ~/Notes/MD/notes
 ```
+Choose option `n` at first to initialize the *TMSU* Repo
 
 ## Running the Scripts Manually (Recommended)
 
@@ -64,6 +61,10 @@ Copy the following files into `~/bin`:
 * `./bin/YamltoTMSU.R`
 * `./bin/hashtags.sh`
 * `./bin/tags-to-TMSU.sh`
+
+### Initialize TMSU
+
+First go to your notes directory and initialise a tmsu database with `tmsu init`.
 
 ### `#`tags
 
