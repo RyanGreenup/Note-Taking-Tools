@@ -14,7 +14,7 @@ Currently this works for:
 
 This screenshot provides an example of how this works:
 
-
+![](./media/TMSU-Script.png)
 
 ## Requirements
 
