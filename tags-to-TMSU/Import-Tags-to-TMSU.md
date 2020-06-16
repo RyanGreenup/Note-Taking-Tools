@@ -8,7 +8,7 @@
   * [Tidyverse](https://cran.r-project.org/web/packages/tidyverse/index.html)
       * [See there website](https://www.tidyverse.org/)
   * [RMarkdown](https://cran.r-project.org/web/packages/rmarkdown/index.html)
-  * [ripgrep](https://github.com/BurntSushi/ripgrep)
+* [ripgrep](https://github.com/BurntSushi/ripgrep)
 * [TMSU](https://tmsu.org/) <sup> [AUR](https://aur.archlinux.org/packages/tmsu/) </sup>
 * [GNU Stow](https://www.gnu.org/software/stow/) is recommended
 
