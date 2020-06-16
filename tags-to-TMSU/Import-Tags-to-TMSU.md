@@ -27,6 +27,9 @@ This screenshot provides an example of how this works:
 * [ripgrep](https://github.com/BurntSushi/ripgrep)
 * [TMSU](https://tmsu.org/) <sup> [AUR](https://aur.archlinux.org/packages/tmsu/) </sup>
 * [GNU Stow](https://www.gnu.org/software/stow/) is recommended
+* [Ranger](https://github.com/ranger/ranger) or some file browser with [Miller Collumns](https://en.wikipedia.org/wiki/Miller_columns) is recommended
+
+### Recomme
 
 ### MD Files
 
