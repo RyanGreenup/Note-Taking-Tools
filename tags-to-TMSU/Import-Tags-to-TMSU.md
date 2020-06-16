@@ -23,13 +23,9 @@
 
 ## Installation
 
-Copy the following files into `~/bin`:
+### GNU Stow
 
-* `./bin/YamltoTMSU.R`
-* `./bin/hashtags.sh`
-* `./bin/tags-to-TMSU.sh`
-
-So for example:
+Just do this:
 
 ```
 mkdir -p ~/DotFiles/Note-Taking-Tools
@@ -37,6 +33,16 @@ git clone https://github.com/RyanGreenup/Note-Taking-Tools ~/DotFiles/Note-Takin
 cd ~/DotFiles/Note-Taking-Tools
 stow -t $HOME -S tags-to-TMSU
 ```
+
+### Manually
+
+Copy the following files into `~/bin`:
+
+* `./bin/YamltoTMSU.R`
+* `./bin/hashtags.sh`
+* `./bin/tags-to-TMSU.sh`
+
+
 
 ## How to use
 
@@ -57,6 +63,8 @@ alternatively call it in the same location as the notes.
 ```bash
 tags-to-TMSU.sh ~/Notes/MD/notes
 ```
+
+## Running the Scripts Manually (Recommended)
 
 ### `#`tags
 
