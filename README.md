@@ -12,5 +12,5 @@ Tools to Facilitate MD Note Taking, Intended to integrate with Notable.
 
 ## TODO Searching
 
-* [Search Engine]()
+* [Search Engine](Terminal-Skim-Recoll/Terminal-Skim-Recoll.md)
 * [RipGrep]()
