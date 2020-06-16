@@ -29,8 +29,8 @@ Copy the following files into `~/bin`:
 So for example:
 
 ```
-mkdir ~/DotFiles
-git clone https://github.com/RyanGreenup/Note-Taking-Tools ~/DotFiles
+mkdir -p ~/DotFiles/Note-Taking-Tools
+git clone https://github.com/RyanGreenup/Note-Taking-Tools ~/DotFiles/Note-Taking-Tools
 cd ~/DotFiles
 stow -t $HOME -S Note-Taking-Tools
 ```
