@@ -34,15 +34,6 @@ cd ~/DotFiles/Note-Taking-Tools
 stow -t $HOME -S tags-to-TMSU
 ```
 
-### Manually
-
-Copy the following files into `~/bin`:
-
-* `./bin/YamltoTMSU.R`
-* `./bin/hashtags.sh`
-* `./bin/tags-to-TMSU.sh`
-
-
 
 ## How to use
 
@@ -65,6 +56,14 @@ tags-to-TMSU.sh ~/Notes/MD/notes
 ```
 
 ## Running the Scripts Manually (Recommended)
+
+### Installing Manually
+
+Copy the following files into `~/bin`:
+
+* `./bin/YamltoTMSU.R`
+* `./bin/hashtags.sh`
+* `./bin/tags-to-TMSU.sh`
 
 ### `#`tags
 
