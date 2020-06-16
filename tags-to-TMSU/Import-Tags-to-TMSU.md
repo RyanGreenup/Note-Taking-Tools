@@ -2,6 +2,20 @@
 
 > [Home](../README.md)
 
+This collection of scripts will take tags from your MD notes and pass them to *TMSU* so they be useful outside of any particular app.
+
+Currently this works for:
+
+* YAML tags (think Notable and WikiJS [^1]) 
+* `#tags` (think Zettlr and Obsidian) 
+* There is no support for `:tags` like Vimwiki, this shouldn't be hard to implement though.
+
+[^1]: Currently WikiJS tags are broken, [see this issue here](https://github.com/Requarks/wiki/issues/1997)
+
+This screenshot provides an example of how this works:
+
+
+
 ## Requirements
 
 * **_R_** <sup>(I'm on v 4.0, I don't know if that matters)</sup>
