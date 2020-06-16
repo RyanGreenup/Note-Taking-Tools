@@ -56,18 +56,18 @@ if(require('dplyr')){
 
 args <- commandArgs(trailingOnly = TRUE)
 
-if (length(args)!=0) {
-  if (args[1]=="--help" | args[1]=="-h") {
-      print("First Argument should be the notes parent directory,
-          this will go through all MD files, extract the yaml
-           tags and save them in tmp`")
-  } else {
-      DIR <- args[1]
-  }
-} else {
-      DIR <- "~/Notes/MD/notes"
-}
-setwd(DIR)
+ if (length(args)!=0) {
+   if (args[1]=="--help" | args[1]=="-h") {
+       print("First Argument should be the notes parent directory,
+           this will go through all MD files, extract the yaml
+            tags and save them in tmp`")
+   } else {
+       DIR <- args[1]
+   }
+ } else {
+       DIR <- "~/Notes/MD/notes"
+ }
+ setwd(DIR)
 
 
 
@@ -127,7 +127,11 @@ for (i in noteFiles){
 EndTime <- Sys.time()
 
 #### Add the command prefix to the file and tags===================================
-tagVector <- as.matrix(tagVector)
+if (length(tagVector) >0 ) {
+    tagVector <- as.matrix(tagVector)
+} else {
+    print("The Tags were not generated")
+}
 tagVector <- paste("tmsu tag", tagVector)
 
 #### Add a CD Command
