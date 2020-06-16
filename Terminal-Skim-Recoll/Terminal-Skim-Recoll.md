@@ -2,16 +2,16 @@
 An easy way to search for notes with Recoll
 
 ## Requirements
-* Skim
+* [Skim](https://github.com/lotabout/skim)
   * I use this instead of fzf because it has an interactive mode, although I
     have been unable to get that to work though.
-* MDCat
+* [MDCat](https://github.com/lunaryorn/mdcat)
   * I use this instead of glow, highlight or bcat, because it looks better and because it supports images (although the images don't work through `skim`)
-* Kitty (Recommended)
+* [Kitty](https://sw.kovidgoyal.net/kitty/) (Recommended)
     * Makes the markdown preview the best, if on Mac, iTerm2 is another option.
         * I'm not sure if Alacritty would work well with MDCat?
         
-## Installation        
+## Installation
 
 ```bash
 mkdir -p ~/DotFiles/Note-Taking-Tools
@@ -35,7 +35,9 @@ This will work in the terminal and or in VSCode, I'm a big Vim/Emacs fan but I d
 
 ### RipGrep
 
-Alternatively it is possible to use ripgrep instead of recoll by running `nr.sh`, I just [copy pasted that from here](https://github.com/lotabout/skim#as-interactive-interface)
+Alternatively it is possible to use ripgrep instead of recoll by running `nr.sh` in the directory of markdown files you want to search, I just [copy pasted that from here basically](https://github.com/lotabout/skim#as-interactive-interface).
 
+### Screenshot
+This is what it looks like to use:
 
 ![image-20200616135734272](./media/image-20200616135734272.png)
