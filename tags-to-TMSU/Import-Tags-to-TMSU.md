@@ -10,6 +10,7 @@ Currently this works for:
     * Currently WikiJS tags are broken, [see this issue here](https://github.com/Requarks/wiki/issues/1997)
 * `#tags` (think Zettlr and Obsidian) 
 * There is no support for `:tags:` like Vimwiki, this shouldn't be hard to implement though.
+    * I wonder if that would also work for `org-mode` files? 🤔
 
 
 
