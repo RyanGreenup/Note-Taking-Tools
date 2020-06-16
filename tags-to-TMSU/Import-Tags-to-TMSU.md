@@ -48,7 +48,7 @@ This screenshot provides an example of how this works:
 
 Just do this:
 
-```
+```bash
 mkdir -p ~/DotFiles/Note-Taking-Tools
 git clone https://github.com/RyanGreenup/Note-Taking-Tools ~/DotFiles/Note-Taking-Tools
 cd ~/DotFiles/Note-Taking-Tools
