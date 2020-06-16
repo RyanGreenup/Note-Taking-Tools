@@ -3,10 +3,13 @@
 
 ## Requirements
 
-* **_R_**
-  * Tidyverse
-* ripgrep
-* TMSU
+* **_R_** <sup>(I'm on v 4.0, I don't know if that matters)</sup>
+  * [Tidyverse](https://cran.r-project.org/web/packages/tidyverse/index.html)
+      * [See there website](https://www.tidyverse.org/)
+  * [RMarkdown](https://cran.r-project.org/web/packages/rmarkdown/index.html)
+  * [ripgrep](https://github.com/BurntSushi/ripgrep)
+* [TMSU](https://tmsu.org/)
+* [GNU Stow](https://www.gnu.org/software/stow/) is recommended
 
 ### MD Files
 * Syntactically correct file names
@@ -23,6 +26,14 @@ Copy the following files into `~/bin`:
 * `./bin/hashtags.sh`
 * `./bin/tags-to-TMSU.sh`
 
+So for example:
+
+```
+mkdir ~/DotFiles
+git clone https://github.com/RyanGreenup/Note-Taking-Tools ~/DotFiles
+cd ~/DotFiles
+stow -t $HOME -S Note-Taking-Tools
+```
 
 ## How to use
 
