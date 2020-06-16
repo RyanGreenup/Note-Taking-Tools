@@ -8,6 +8,14 @@
 * ripgrep
 * TMSU
 
+### MD Files
+* Syntactically correct file names
+    * no `()#!/\` or whitespace characters
+        * WikiJS uses `-` instead of space so I use that, as opposed to `_`
+    * TODO surround the file names in the **_R_**-*Script* with `''` to hide whitespace from the shell
+* Tags are not logical operators
+    * don't have tags that are `and`, `or` or `not`
+
 ## Installation
 Copy the following files into `~/bin`:
 
