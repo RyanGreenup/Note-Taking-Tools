@@ -79,6 +79,10 @@ Choose the tags you'd like generated and then after they've generated mount the 
 cd ~/Notes/MD/notes
 mkdir /tmp/tags
 tmsu mount /tmp/tags
+cd /tmp/tags
+cd $(ls | fzf)
+
+## Or just use ranger:
 ranger /tmp/tags/tags
 ```
 > :warning: DO NOT Mount the TMSU directory under *Dropbox*, it causes headaches.
