@@ -46,8 +46,6 @@ This gif and screenshot provides an example of how this works:
 
 ## Installation
 
-### GNU Stow
-
 Just do this:
 
 ```bash
@@ -56,6 +54,7 @@ git clone https://github.com/RyanGreenup/Note-Taking-Tools ~/DotFiles/Note-Takin
 cd ~/DotFiles/Note-Taking-Tools
 stow -t $HOME -S tags-to-TMSU
 ```
+> Requires *GNU Stow*
 
 
 ## How to use
