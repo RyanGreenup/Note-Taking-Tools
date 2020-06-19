@@ -33,7 +33,7 @@ This gif and screenshot provides an example of how this works:
     * If using Ranger Consider using [MDCat](https://docs.rs/mdcat/0.18.4/mdcat/) as I've done [in my DotFiles here](https://github.com/RyanGreenup/DotFiles/blob/master/NeoVim/.config/ranger/scope.sh)
     * Consider also implementing fzf, [as I've done here](https://github.com/RyanGreenup/DotFiles/blob/master/NeoVim/.config/ranger/commands.py)
 
-### Recomme
+### Recommended
 
 ### MD Files
 
