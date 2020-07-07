@@ -17,7 +17,10 @@ Make a `bash` script, an alias or a function in
 bash:
 
 ```bash
-term=$(x -o | xargs basename |  cut -f 1 -d '.'); rg --pcre2 -e "(?<=\]\().+$term\.md(?=\))" -e "\[\[$term\]\]" -e "\[\[$term.*\]\]" ~/Notes/ -t markdown -o | \
+term=$(xclip -selection clipboard -o | xargs basename |  cut -f 1 -d '.')
+rg --pcre2 -e "(?<=\]\().+$term\.md(?=\))" -e "\[\[$term\]\]" -e "\[\[$term.*\]\]" \
+    ~/Notes/MD/notes \
+    -t markdown -o | \
     sed s+:+\ + | sd ' .*' ''
 ```
 
