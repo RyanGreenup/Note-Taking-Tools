@@ -12,3 +12,7 @@ Tools to Facilitate MD Note Taking, Intended to integrate with Notable.
 ## Searching
 
 * [Search through notes with Recoll search Engine](Terminal-Skim-Recoll/Terminal-Skim-Recoll.md)
+
+## Backlinks
+
+* [Search through notes with Recoll search Engine](List-BackLinks/ListBacklinks.md)
