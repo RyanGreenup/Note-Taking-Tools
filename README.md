@@ -15,4 +15,4 @@ Tools to Facilitate MD Note Taking, Intended to integrate with Notable.
 
 ## Backlinks
 
-* [Search through notes with Recoll search Engine](List-BackLinks/ListBacklinks.md)
+* [Print Backlinks to Terminal](List-BackLinks/ListBacklinks.md)

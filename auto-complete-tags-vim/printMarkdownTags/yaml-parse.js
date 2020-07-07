@@ -22,7 +22,7 @@ if (process.argv[2] == undefined) {
     const path = process.argv[2];
     process.chdir(path);
     if (debugFlag) {
-        console.log(`Using Specified Directory ${process.argv[2]}`)   
+        console.log(`Using Specified Directory ${process.argv[2]}`)
     }
 }
 
