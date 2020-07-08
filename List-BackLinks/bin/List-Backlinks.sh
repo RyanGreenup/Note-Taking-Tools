@@ -7,5 +7,10 @@ command -v xclip >/dev/null 2>&1 || { echo >&2 "I require xclip but it's not ins
 
 
 
-term=$(xclip -selection clipboard -o | xargs basename |  cut -f 1 -d '.')
-rg --pcre2 -e "(?<=\]\().+$term\.md(?=\))" -e "\[\[$term\]\]" -e "\[\[$term.*\]\]" ~/Notes/MD/notes -t markdown -ol
+term=$(xclip -selection clipboard -o | xargs basename |  cut -f 1 -d '.'); rg -e "\[.*\]\(.*$term\.md\)" -e "\[\[$term\]\]" -e "\[\[$term.*\]\]" ~/Notes/MD/notes -t markdown -ol
+
+
+## If you want to preview the Backlinks
+ ##  rg -e "\[.*\]\(.*$term\.md\)" -e "\[\[$term\]\]" -e "\[\[$term.*\]\]" \
+ ##      ~/Notes/  -t markdown -ol \
+ ##  fzf --bind pgup:preview-page-up,pgdn:preview-page-down --preview "mdcat {}"
