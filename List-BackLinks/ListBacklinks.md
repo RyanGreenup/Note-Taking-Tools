@@ -20,8 +20,7 @@ bash:
 term=$(xclip -selection clipboard -o | xargs basename |  cut -f 1 -d '.')
 rg --pcre2 -e "(?<=\]\().+$term\.md(?=\))" -e "\[\[$term\]\]" -e "\[\[$term.*\]\]" \
     ~/Notes/MD/notes \
-    -t markdown -o | \
-    sed s+:+\ + | sd ' .*' ''
+    -t markdown -ol
 ```
 
 ## Usage
