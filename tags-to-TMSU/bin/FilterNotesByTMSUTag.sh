@@ -79,3 +79,14 @@ read -d'' -s -n1 conTagQ
 
 FilterTags
 exit 0
+
+
+
+
+
+# TODO Chosen Tags Should not be listed also as concurrent Tags
+# TODO Chosen Tags should all be unique
+# TODO Should get an MDCat Preview
+# TODO Switch from Rscript to JS [[./tags-to-TMSU.sh]]
+# TODO Coloured Output
+# TODO Press Any Key to continue NOT ENTER
