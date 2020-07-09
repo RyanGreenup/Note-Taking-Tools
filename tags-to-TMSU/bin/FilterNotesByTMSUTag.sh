@@ -14,8 +14,8 @@ command -v perl >/dev/null 2>&1 || { echo >&2 "I require perl but it's not insta
 
 ConcurrentTags=$(tmsu tags)
 
-echo "Choose a Tag"
-read -p 'Press Any Key to Continue: ' ConQ
+echo "Choose a Tag (Press any Key to Continue)"
+read -d'' -s -n1 continueQ
 
 
 ChosenTags=$(echo "$ConcurrentTags" | fzf -m)
@@ -63,14 +63,11 @@ otherwise press any key to print Matches
 TODO to fuzzy chose a returning file press c (fzf --preview highlight {})
 "
 
-read -d'' -s -n1 conTagQ
+read -d '' -n1 -s conTagQ
 
 
  if [ "$conTagQ" == "t" ]; then
      FilterTags
- else
-     echo "No Longer Filtering Tags"
-     return
  fi
 
  echo $MatchingFiles
