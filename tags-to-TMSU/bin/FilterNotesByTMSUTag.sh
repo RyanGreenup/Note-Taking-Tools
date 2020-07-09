@@ -21,30 +21,13 @@ command -v tmsu >/dev/null 2>&1 || { echo >&2 "I require TMSU but it's not insta
 ConcurrentTags=$(tmsu tags)
 
 echo "Choose a Tag (Press any Key to Continue)"
-read -d'' -s -n1 continueQ
-
-
-ChosenTags=$(echo "$ConcurrentTags" | fzf -m)
-MatchingFiles=$(tmsu files "$ChosenTags")
-
-echo "
-
-You chose the tags:
-
-$ChosenTags
-
-which has matches of
-
-$MatchingFiles
-
-"
+read -d '' -s -n1 continueQ
 
 FilterTags() {
+ChosenTags="$ChosenTags $(echo "$ConcurrentTags" | fzf)"
 MatchingFiles=$(tmsu files "$ChosenTags")
 ConcurrentTags=$(tmsu tags $MatchingFiles | cut -f 2 -d ':' | space2NewLine | sort | uniq | sort -nr )
-ChosenTags="$ChosenTags $(echo "$ConcurrentTags" | fzf)"
-ChosenTags=$(echo "$ChosenTags" | sort | uniq )
-MatchingFiles=$(tmsu files "$ChosenTags")
+ChosenTags=$(echo "$ChosenTags" | space2NewLine | sort -u )
 
 echo "
 The chosen tags are
@@ -76,8 +59,6 @@ read -d '' -n1 -s conTagQ
      FilterTags
  fi
 
- echo $MatchingFiles | space2NewLine
-
 }
 
 space2NewLine() {
@@ -85,7 +66,10 @@ space2NewLine() {
     perl -pe 's/(?<=[^\\])\ /\n/g'
 }
 
+
 FilterTags
+
+echo "$MatchingFiles"
 exit 0
 
 
@@ -95,6 +79,5 @@ exit 0
 # TODO Chosen Tags Should not be listed also as concurrent Tags
 # TODO Chosen Tags should all be unique
 # TODO Should get an MDCat Preview
-# TODO Switch from Rscript to JS [[./tags-to-TMSU.sh]]
+# TODO Initial Tag
 # TODO Coloured Output
-# TODO Press Any Key to continue NOT ENTER
