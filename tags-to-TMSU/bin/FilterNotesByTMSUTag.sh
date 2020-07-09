@@ -27,7 +27,7 @@ FilterTags() {
 ChosenTags="$ChosenTags $(echo "$ConcurrentTags" | fzf)"
 MatchingFiles=$(tmsu files "$ChosenTags")
 ConcurrentTags=$(tmsu tags $MatchingFiles | cut -f 2 -d ':' | space2NewLine | sort | uniq | sort -nr )
-ChosenTags=$(echo "$ChosenTags" | space2NewLine | sort -u )
+ChosenTags=$(echo "$ChosenTags" | space2NewLine | rmLeadingWS | sort -u )
 
 echo "
 The chosen tags are
@@ -66,6 +66,13 @@ space2NewLine() {
     perl -pe 's/(?<=[^\\])\ /\n/g'
 }
 
+## For some reason the first TagResult has a leading whitespace which causes it to double up
+## This function strips whitespace and so needs to be used
+rmLeadingWS() {
+    command -v sd >/dev/null 2>&1 || { echo >&2 "I require sd (sed replacement) but it's not installed.  Aborting."; exit 1; }
+    sd '^ ' ''
+}
+
 
 FilterTags
 
@@ -77,7 +84,6 @@ exit 0
 
 
 # TODO Chosen Tags Should not be listed also as concurrent Tags
-# TODO Chosen Tags should all be unique
 # TODO Should get an MDCat Preview
 # TODO Initial Tag
 # TODO Coloured Output
