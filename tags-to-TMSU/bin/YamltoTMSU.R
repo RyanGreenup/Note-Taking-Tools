@@ -105,8 +105,8 @@ for (i in noteFiles){
   ## should be seperated
   MDTags      <- unlist(strsplit(MDTags, "/", fixed = FALSE))
 
-  ## If a note doesn't have tags then the it should become
-  ## command so only add them if it's null
+  ## If a note doesn't have tags then the it should not become
+  ## command so only add them if it is not null
   if(!is.null(MDTags)) {
 
     ## Tag Names can have spaces so use '' to hide those
