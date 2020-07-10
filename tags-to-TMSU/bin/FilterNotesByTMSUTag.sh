@@ -41,6 +41,10 @@ r :: regenerate Tags
 "
 read -d '' -s -n1 continueQ
 
+if [ "$continueQ" == "r" ]; then
+    ~/bin/tags-to-TMSU.sh
+fi
+
 FilterTags() {
 ChosenTags="$ChosenTags $(echo "$ConcurrentTags" | fzf)"
 MatchingFiles=$(tmsu files "$ChosenTags")
@@ -170,7 +174,7 @@ exit 0
 # DONE fif should use `rg --follow` by default
 # DONE Should not call code when C-c out
 # DONE Should Cleare Symlink Folder after Running
-# TODO Should the option to regen tags present itself?
+# DONE Should the option to regen tags present itself?
 # TODO Restructure
 ## Seperate Script
-# TODO fimd should use mdcat by default as well as skim interactive
+# DONE fimd should use mdcat by default as well as skim interactive
