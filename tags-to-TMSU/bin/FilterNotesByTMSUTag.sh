@@ -95,7 +95,14 @@ addBullets() {
 
 FilterTags
 
-echo "$MatchingFiles"
+## echo "$MatchingFiles"
+
+mkdir /tmp/00tagMatches
+for i in $MatchingFiles; do
+    ln -s $(realpath $i) /tmp/00tagMatches
+done
+
+echo "cd /tmp/00tagMatches"
 exit 0
 
 
@@ -108,3 +115,7 @@ exit 0
 # DONE Initial Tag
 # DONE Coloured Output
 # TODO Output should be useful
+# TODO fif should use `rg --follow` by default
+    # TODO fimd should use mdcat by default
+    # TODO Empty fif argument should search for anythin.
+    # TODO Nah maybe a Skim Interactive mode would be better?
