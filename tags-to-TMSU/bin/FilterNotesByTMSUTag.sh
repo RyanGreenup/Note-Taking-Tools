@@ -97,9 +97,9 @@ FilterTags
 
 ## echo "$MatchingFiles"
 
-mkdir /tmp/00tagMatches
+mkdir /tmp/00tagMatches 2>/dev/null
 for i in $MatchingFiles; do
-    ln -s $(realpath $i) /tmp/00tagMatches
+    ln -s $(realpath $i) /tmp/00tagMatches 2>/dev/null
 done
 
 echo "cd /tmp/00tagMatches"
@@ -115,6 +115,7 @@ exit 0
 # DONE Initial Tag
 # DONE Coloured Output
 # TODO Output should be useful
+# TODO Test for a New Folder
 # TODO fif should use `rg --follow` by default
     # TODO fimd should use mdcat by default
     # TODO Empty fif argument should search for anythin.
