@@ -1,59 +1,121 @@
 #!/usr/bin/env bash
 
-## Use the current Directory because TMSU will return
-## Relative Links from that directory and those
-## links should work from wherever this is run
 
-DEFAULTAPP=code ## TODO Should this be xdg-open?
+function main() {
 
-if [ "$1" == "-h" ] || [ "$1" == "--help"  ]; then
-    echo "Provide Notes Directory as Argument. Otherwise the current directory is used.
 
-The directory must have a TMSU database in it.
+    DEFAULTAPP=code ## TODO Should this be xdg-open?
+    takeArguments $1
+    checkDependencies
+    regenTags
 
-You may generate one through this script.
+    ConcurrentTags=$(tmsu tags)
+    FilterTags
+
+    makeSymlinks
+
+    echo -e "
+⁍ \e[1;35mv\e[0m      :: Open all matching files with \e[1;35mV\e[0mSCode
+⁍ \e[1;35mc\e[0m      :: \e[1;35mC\e[0mhoose a file to open
+⁍ AnyKey :: Create Symlinks in $TEMPDIR
 "
 
-    exit 0
-elif [[ $1 != '' ]]; then
-    NOTE_DIR=$1
-    cd $NOTE_DIR
-else
-    NOTE_DIR='./'
-fi
-
-command -v rg >/dev/null 2>&1 || { echo >&2 "I require ripgrep but it's not installed.  Aborting."; exit 1; }
-command -v sd >/dev/null 2>&1 || { echo >&2 "I require sd (sed replacement) but it's not installed.  Aborting."; exit 1; }
-command -v xclip >/dev/null 2>&1 || { echo >&2 "I require xclip but it's not installed.  Aborting."; exit 1; }
-command -v tmsu >/dev/null 2>&1 || { echo >&2 "I require TMSU but it's not installed.  Aborting."; exit 1; }
+    openMatches
 
 
+}
+
+function checkDependencies() {
+    command -v rg    >/dev/null 2>&1 || { echo >&2 "I require ripgrep but it's not installed.  Aborting."; exit 1; }
+    command -v sd    >/dev/null 2>&1 || { echo >&2 "I require sd (sed replacement) but it's not installed.  Aborting."; exit 1; }
+    command -v xclip >/dev/null 2>&1 || { echo >&2 "I require xclip but it's not installed.  Aborting."; exit 1; }
+    command -v tmsu  >/dev/null 2>&1 || { echo >&2 "I require TMSU but it's not installed.  Aborting."; exit 1; }
+}
 
 
-ConcurrentTags=$(tmsu tags)
-
-echo "
+function regenTags() {
+    echo -e "
 To begin Tag Selection press any key
 
-r :: regenerate Tags
+r :: regenerate Tags"
+
+    read -d '' -s -n1 continueQ
+
+    if [ "$continueQ" == "r" ]; then
+        ~/bin/tags-to-TMSU.sh
+        exit 0 ## Must Exit because it won't find the tags without restarting.
+    fi
+}
+
+function takeArguments() {
+    if [ "$1" == "-h" ] || [ "$1" == "--help"  ]; then
+        printHelp
+        exit 0
+    elif [[ $1 != '' ]]; then
+        NOTE_DIR=$1
+        cd $NOTE_DIR
+    else
+        NOTE_DIR='./'
+    fi
 
 
-"
-read -d '' -s -n1 continueQ
+}
 
-if [ "$continueQ" == "r" ]; then
-    ~/bin/tags-to-TMSU.sh
-fi
+function printHelp() {
+    echo "Either Specify the Directory as an argument or it
+    will run in the current Directory, otherwise this is interactive and doesn't
+    provide STDOUT"
+    }
+
+function makeSymlinks() {
+    rm -r $TEMPDIR ## If you want to have or logic for tags, the selections
+                      ## must persist over iterations
+    mkdir $TEMPDIR 2>/dev/null
+
+
+    for i in $MatchingFiles; do
+        ln -s $(realpath $i) /tmp/00tagMatches 2>/dev/null
+    done
+    echo "SymLinks Made in $TEMPDIR"
+}
+
+function openMatches() {
+
+    read -d '' -n1 -s openQ
+
+    if [ "$openQ" == "c" ]; then
+        cd $TEMPDIR
+        ## sk --ansi -i -c 'rg --color=always -l "{}"' --preview "mdcat {}" \
+        ##        --bind pgup:preview-page-up,pgdn:preview-page-down
+        sk --ansi --preview "mdcat {}" \
+            --bind pgup:preview-page-up,pgdn:preview-page-down | \
+            xargs realpath | xargs $DEFAULTAPP -a
+    elif [ "$openQ" == "v" ]; then
+
+        for i in "$MatchingFiles"; do
+
+            code -a $i
+
+        done
+
+    else
+        echo "The following files were symlinked in $TEMPDIR:"
+        echo -e "~~~~~~~~~~~~
+
+            \e[1;34m $(ls $TEMPDIR)\e[0m"
+
+    fi
+}
 
 FilterTags() {
-ChosenTags="$ChosenTags $(echo "$ConcurrentTags" | fzf)"
-MatchingFiles=$(tmsu files "$ChosenTags")
-ConcurrentTags=$(tmsu tags $MatchingFiles | cut -f 2 -d ':' | space2NewLine | sort | uniq | sort -nr )
-ChosenTags=$(echo "$ChosenTags" | space2NewLine | sort -u )
-ConcurrentTags=$(comm -13 <(echo "$ChosenTags" | sort) <(echo "$ConcurrentTags" | sort))
+    ChosenTags="$ChosenTags $(echo "$ConcurrentTags" | fzf)"
+    MatchingFiles=$(tmsu files "$ChosenTags")
+    ConcurrentTags=$(tmsu tags $MatchingFiles | cut -f 2 -d ':' | space2NewLine | sort | uniq | sort -nr )
+    ChosenTags=$(echo "$ChosenTags" | space2NewLine | sort -u )
+    ConcurrentTags=$(comm -13 <(echo "$ChosenTags" | sort) <(echo "$ConcurrentTags" | sort))
 
 
-echo -e "
+    echo -e "
 
 \e[1;32m
 ═══════════════════════════════════════════════════════════════════════════
@@ -80,21 +142,21 @@ $(addBullets "$ConcurrentTags")
 \e[0m
 "
 
-## read -p 'Press t to continue chosing Tags concurrently: ' conTagQ
-TEMPDIR=/tmp/00tagMatches
-echo -e "
+    ## read -p 'Press t to continue chosing Tags concurrently: ' conTagQ
+    TEMPDIR=/tmp/00tagMatches
+    echo -e "
 
 
 ⁍ \e[1;35mt\e[0m      :: Choose Concurrent \e[1;35mT\e[0mags
 ⁍ AnyKey :: Accept Chosen Tags \e[1;35mT\e[0mags
 "
 
-read -d '' -n1 -s conTagQ
+    read -d '' -n1 -s conTagQ
 
 
- if [ "$conTagQ" == "t" ]; then
-     FilterTags
- fi
+    if [ "$conTagQ" == "t" ]; then
+        FilterTags
+    fi
 
 }
 
@@ -111,53 +173,13 @@ rmLeadingWS() {
 }
 
 addBullets() {
-    echo "$1" | perl -pe 's/^(?=.)/\tʘ\ /g'
+    echo "$1" | perl -pe 's/^(?=.)/\t‣\ /g'
 }
 
 
-FilterTags
-
-rm -r $TEMPDIR ## If you want to have or logic for tags, the selections
-                  ## must persist over iterations
-mkdir $TEMPDIR 2>/dev/null
 
 
-for i in $MatchingFiles; do
-    ln -s $(realpath $i) /tmp/00tagMatches 2>/dev/null
-done
-echo "SymLinks Made in $TEMPDIR"
-
-echo -e "
-⁍ \e[1;35mv\e[0m      :: Open all matching files with \e[1;35mV\e[0mSCode
-⁍ \e[1;35mc\e[0m      :: \e[1;35mC\e[0mhoose a file to open
-⁍ AnyKey :: Create Symlinks in $TEMPDIR
-"
-
-
-read -d '' -n1 -s openQ
-
- if [ "$openQ" == "c" ]; then
-     cd $TEMPDIR
-     ## sk --ansi -i -c 'rg --color=always -l "{}"' --preview "mdcat {}" \
-     ##        --bind pgup:preview-page-up,pgdn:preview-page-down
-     sk --ansi --preview "mdcat {}" \
-         --bind pgup:preview-page-up,pgdn:preview-page-down | \
-         xargs realpath | xargs $DEFAULTAPP -a
- elif [ "$openQ" == "v" ]; then
-
-     for i in "$MatchingFiles"; do
-
-         code -a $i
-
-     done
-
- else
-     echo "The following files were symlinked in $TEMPDIR:"
-     echo -e "~~~~~~~~~~~~
-
-        \e[1;34m $(ls $TEMPDIR)\e[0m"
-
- fi
+main $1
 
 exit 0
 
