@@ -6,8 +6,18 @@
 
 DEFAULTAPP=code ## TODO Should this be xdg-open?
 
-if [[ $1 != '' ]]; then
+if [ "$1" == "-h" ] || [ "$1" == "--help"  ]; then
+    echo "Provide Notes Directory as Argument. Otherwise the current directory is used.
+
+The directory must have a TMSU database in it.
+
+You may generate one through this script.
+"
+
+    exit 0
+elif [[ $1 != '' ]]; then
     NOTE_DIR=$1
+    cd $NOTE_DIR
 else
     NOTE_DIR='./'
 fi
@@ -23,7 +33,12 @@ command -v tmsu >/dev/null 2>&1 || { echo >&2 "I require TMSU but it's not insta
 ConcurrentTags=$(tmsu tags)
 
 echo "
-To begin Tag Selection press any key"
+To begin Tag Selection press any key
+
+r :: regenerate Tags
+
+
+"
 read -d '' -s -n1 continueQ
 
 FilterTags() {
@@ -133,7 +148,11 @@ read -d '' -n1 -s openQ
      done
 
  else
-     echo ''
+     echo "The following files were symlinked in $TEMPDIR:"
+     echo -e "~~~~~~~~~~~~
+
+        \e[1;34m $(ls $TEMPDIR)\e[0m"
+
  fi
 
 exit 0
@@ -147,11 +166,11 @@ exit 0
   # DONE Should get Bullets and Horizontal Rules
 # DONE Initial Tag
 # DONE Coloured Output
-# TODO Output should be useful
+# DONE Output should be useful
 # DONE fif should use `rg --follow` by default
-    # TODO fimd should use mdcat by default
-    # TODO Empty fif argument should search for anythin.
-    # TODO Nah maybe a Skim Interactive mode would be better?
-# TODO Should not call code when C-c out
-# TODO Should Cleare Symlink Folder after Running
+# DONE Should not call code when C-c out
+# DONE Should Cleare Symlink Folder after Running
 # TODO Should the option to regen tags present itself?
+# TODO Restructure
+## Seperate Script
+# TODO fimd should use mdcat by default as well as skim interactive
