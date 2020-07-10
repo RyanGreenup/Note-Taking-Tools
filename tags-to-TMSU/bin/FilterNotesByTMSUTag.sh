@@ -88,5 +88,5 @@ exit 0
 
 # DONE Chosen Tags Should not be listed also as concurrent Tags
 # TODO Should get an MDCat Preview
-# TODO Initial Tag
+# DONE Initial Tag
 # TODO Coloured Output
