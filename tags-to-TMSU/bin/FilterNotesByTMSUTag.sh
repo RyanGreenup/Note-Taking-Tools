@@ -27,7 +27,7 @@ FilterTags() {
 ChosenTags="$ChosenTags $(echo "$ConcurrentTags" | fzf)"
 MatchingFiles=$(tmsu files "$ChosenTags")
 ConcurrentTags=$(tmsu tags $MatchingFiles | cut -f 2 -d ':' | space2NewLine | sort | uniq | sort -nr )
-ChosenTags=$(echo "$ChosenTags" | space2NewLine | rmLeadingWS | sort -u )
+ChosenTags=$(echo "$ChosenTags" | space2NewLine | sort -u )
 
 echo "
 The chosen tags are
@@ -41,6 +41,7 @@ $MatchingFiles
 and Concurrent Tags
 
 $ConcurrentTags
+
 
 "
 
@@ -63,7 +64,7 @@ read -d '' -n1 -s conTagQ
 
 space2NewLine() {
     command -v perl >/dev/null 2>&1 || { echo >&2 "I require perl but it's not installed.  Aborting."; exit 1; }
-    perl -pe 's/(?<=[^\\])\ /\n/g'
+    perl -pe 's/(?<=[^\\])\ /\n/g' | rmLeadingWS
 }
 
 ## For some reason the first TagResult has a leading whitespace which causes it to double up
