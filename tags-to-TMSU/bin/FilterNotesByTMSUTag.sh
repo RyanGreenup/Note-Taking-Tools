@@ -32,17 +32,20 @@ ConcurrentTags=$(comm -13 <(echo "$ChosenTags" | sort) <(echo "$ConcurrentTags" 
 
 
 echo "
-The chosen tags are
 
-$ChosenTags
+══════════════════════════════════════════════════════════════════════════════════════════════════════════
+The chosen tags are:
 
-With Matching Files
+$(addBullets "$ChosenTags")
 
-$MatchingFiles
+With Matching Files:
 
-and Concurrent Tags
+$(addBullets "$MatchingFiles")
 
-$ConcurrentTags
+and Concurrent Tags:
+
+$(addBullets "$ConcurrentTags")
+══════════════════════════════════════════════════════════════════════════════════════════════════════════
 
 
 "
@@ -76,6 +79,10 @@ rmLeadingWS() {
     sd '^ ' ''
 }
 
+addBullets() {
+    echo "$1" | perl -pe 's/^(?=.)/\tʘ\ /g'
+}
+
 
 FilterTags
 
@@ -88,5 +95,6 @@ exit 0
 
 # DONE Chosen Tags Should not be listed also as concurrent Tags
 # TODO Should get an MDCat Preview
+  # DONE Should get Bullets and Horizontal Rules
 # DONE Initial Tag
 # TODO Coloured Output
