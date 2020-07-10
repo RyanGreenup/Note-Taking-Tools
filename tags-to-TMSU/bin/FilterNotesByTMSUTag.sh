@@ -20,7 +20,8 @@ command -v tmsu >/dev/null 2>&1 || { echo >&2 "I require TMSU but it's not insta
 
 ConcurrentTags=$(tmsu tags)
 
-echo "Choose a Tag (Press any Key to Continue)"
+echo "
+To begin Tag Selection press any key"
 read -d '' -s -n1 continueQ
 
 FilterTags() {
@@ -31,23 +32,31 @@ ChosenTags=$(echo "$ChosenTags" | space2NewLine | sort -u )
 ConcurrentTags=$(comm -13 <(echo "$ChosenTags" | sort) <(echo "$ConcurrentTags" | sort))
 
 
-echo "
+echo -e "
 
-══════════════════════════════════════════════════════════════════════════════════════════════════════════
+\e[1;32m
+═══════════════════════════════════════════════════════════════════════════
+\e[0m
+
 The chosen tags are:
 
+\e[1;35m
 $(addBullets "$ChosenTags")
+\e[0m
 
 With Matching Files:
 
+\e[1;34m
 $(addBullets "$MatchingFiles")
+\e[0m
 
 and Concurrent Tags:
-
+\e[1;33m
 $(addBullets "$ConcurrentTags")
-══════════════════════════════════════════════════════════════════════════════════════════════════════════
-
-
+\e[0m
+\e[1;32m
+═══════════════════════════════════════════════════════════════════════════
+\e[0m
 "
 
 ## read -p 'Press t to continue chosing Tags concurrently: ' conTagQ
@@ -94,7 +103,8 @@ exit 0
 
 
 # DONE Chosen Tags Should not be listed also as concurrent Tags
-# TODO Should get an MDCat Preview
+# DONE Should get an MDCat Preview
   # DONE Should get Bullets and Horizontal Rules
 # DONE Initial Tag
-# TODO Coloured Output
+# DONE Coloured Output
+# TODO Output should be useful
