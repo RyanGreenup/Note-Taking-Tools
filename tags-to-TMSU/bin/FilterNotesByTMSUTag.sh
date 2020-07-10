@@ -28,6 +28,8 @@ ChosenTags="$ChosenTags $(echo "$ConcurrentTags" | fzf)"
 MatchingFiles=$(tmsu files "$ChosenTags")
 ConcurrentTags=$(tmsu tags $MatchingFiles | cut -f 2 -d ':' | space2NewLine | sort | uniq | sort -nr )
 ChosenTags=$(echo "$ChosenTags" | space2NewLine | sort -u )
+ConcurrentTags=$(comm -13 <(echo "$ChosenTags" | sort) <(echo "$ConcurrentTags" | sort))
+
 
 echo "
 The chosen tags are
@@ -84,7 +86,7 @@ exit 0
 
 
 
-# TODO Chosen Tags Should not be listed also as concurrent Tags
+# DONE Chosen Tags Should not be listed also as concurrent Tags
 # TODO Should get an MDCat Preview
 # TODO Initial Tag
 # TODO Coloured Output
