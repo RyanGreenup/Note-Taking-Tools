@@ -13,11 +13,6 @@ This is essentially an easy way to get tags auto completed in vim.
   + TODO Possibly *Emacs*
 + [fzf](https://github.com/junegunn/fzf)
 + [FZF.Vim](https://github.com/junegunn/fzf.vim)
-+ `*nix` OS
-  + This is really written with Linux in mind, presumably it would be totally
-    compatible with [*FreeBSD*](https://github.com/freebsd/freebsd), *MacOS* and very possibly [*WSL*](https://docs.microsoft.com/en-us/windows/wsl/install-win10).
-    + On the balance of probabilities [*WSL*](https://docs.microsoft.com/en-us/windows/wsl/install-win10) would require a bit of
-      trial/error
 
 ### Recommended
 
@@ -29,6 +24,8 @@ This is essentially an easy way to get tags auto completed in vim.
   + This provides an easy way to insert `#tags`
     + I'll post up a simple **_R_** script to pass `#tags` to [[TMSU](https://tmsu.org/) after
       exams and put a link here.
+
+>  This is really written with Linux in mind.
 
 ## Usage
 
