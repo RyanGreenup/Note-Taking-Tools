@@ -50,7 +50,14 @@ for (let j = 0; j < noteFilePathList.length; j++) {
     // Pull ou the YAML header as an object using
     // the yaml-front-matter package.
     // This is a JavaScriptObect
-    let ymlExtract = yamlFront.loadFront(file_text);
+
+    let ymlExtract;
+    try {
+        ymlExtract = yamlFront.loadFront(file_text);
+    } catch (error) {
+        process.stdout.write("Bad YAML In" + filePath)
+        continue;
+    }
     let thetags = ymlExtract.tags;
     // Extract the tags as an array.
 
