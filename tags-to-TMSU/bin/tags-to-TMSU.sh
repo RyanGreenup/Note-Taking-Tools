@@ -11,7 +11,7 @@ echo 'Which Type of tags would you like to import to TMSU create (1/2/3)?
 n ::  New TMSU DB
 y ::  YAML Tags
 t ::  #Tags
-b ::  Both
+b ::  Both    (Requires R-TidyVerse and R-rmarkdown #TODO switch to JS)
 x ::  Clear all TMSU DB
 h ::  help
 
@@ -49,6 +49,7 @@ elif [ $choice == 'b' ]; then
 
     ## Implement YAML Tags
     Rscript ~/bin/YamltoTMSU.R $NOTE_DIR ## Assumption that RScript is in ~/bin
+                                         ## Should this use R or JavaScript??
 
     cd $NOTE_DIR
     bash /tmp/00tags.sh
