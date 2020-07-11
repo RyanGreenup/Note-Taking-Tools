@@ -50,7 +50,16 @@ for (let j = 0; j < noteFilePathList.length; j++) {
 
     // We need to extract the text from the file name
     // into a string variable
-    let file_text = fs.readFileSync(filePath, "utf-8");
+    let file_text;
+
+    // Use Try/Catch incase of Broken Symlink
+    try {
+        file_text = fs.readFileSync(filePath, "utf-8");        
+    } catch (error) {
+        // This should be Silent
+        console.warn(" " + filePath + "Does Not Exist");
+        continue;
+    }
 
     // Pull ou the YAML header as an object using
     // the yaml-front-matter package.
@@ -59,7 +68,7 @@ for (let j = 0; j < noteFilePathList.length; j++) {
     try {
         ymlExtract = yamlFront.loadFront(file_text);
     } catch (error) {
-        process.stdout.write("Bad YAML In" + filePath)
+        console.warn("Bad YAML In" + filePath)
         continue;
     }
     let thetags = ymlExtract.tags;

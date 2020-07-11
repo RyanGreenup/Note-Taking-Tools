@@ -18,6 +18,11 @@ if (process.argv[2] == undefined) {
         console.log(`No Path Detected, using this directory ${process.argv[1]}`)
         console.log("Remember to use $HOME not ~")
     }
+} else if (process.argv[2] == "-h" | process.argv[2] == "--help") {
+    console.log("\nProvide the Directory of MD Notes as the First Argument")
+    console.log("Otherwise the current directory, ./, will be used.\n")
+    console.log("No notes will not lead to any warning")
+    console.log("This is necessary so as to not be dangerous when | bash\n")
 } else {
     const path = process.argv[2];
     process.chdir(path);
@@ -45,8 +50,16 @@ for (let j = 0; j < noteFilePathList.length; j++) {
 
     // We need to extract the text from the file name
     // into a string variable
-    let file_text = fs.readFileSync(filePath, "utf-8");
+    let file_text;
 
+    // Use Try/Catch incase of Broken Symlink
+    try {
+        file_text = fs.readFileSync(filePath, "utf-8");        
+    } catch (error) {
+        // This should be Silent
+        console.warn(" " + filePath + "Does Not Exist");
+        continue;
+    }
     // Pull ou the YAML header as an object using
     // the yaml-front-matter package.
     // This is a JavaScriptObect
@@ -55,7 +68,7 @@ for (let j = 0; j < noteFilePathList.length; j++) {
     try {
         ymlExtract = yamlFront.loadFront(file_text);
     } catch (error) {
-        process.stdout.write("Bad YAML In" + filePath)
+        console.warn("Bad YAML In" + filePath)
         continue;
     }
     let thetags = ymlExtract.tags;
