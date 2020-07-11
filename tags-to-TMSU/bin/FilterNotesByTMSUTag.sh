@@ -1,38 +1,121 @@
 #!/usr/bin/env bash
 
-## Use the current Directory because TMSU will return
-## Relative Links from that directory and those
-## links should work from wherever this is run
 
-if [[ $1 != '' ]]; then
-    NOTE_DIR=$1
-else
-    NOTE_DIR='./'
-fi
-
-command -v rg >/dev/null 2>&1 || { echo >&2 "I require ripgrep but it's not installed.  Aborting."; exit 1; }
-command -v sd >/dev/null 2>&1 || { echo >&2 "I require sd (sed replacement) but it's not installed.  Aborting."; exit 1; }
-command -v xclip >/dev/null 2>&1 || { echo >&2 "I require xclip but it's not installed.  Aborting."; exit 1; }
-command -v tmsu >/dev/null 2>&1 || { echo >&2 "I require TMSU but it's not installed.  Aborting."; exit 1; }
+function main() {
 
 
+    DEFAULTAPP=code ## TODO Should this be xdg-open?
+    takeArguments $1
+    checkDependencies
+    regenTags
+
+    ConcurrentTags=$(tmsu tags)
+    FilterTags
+
+    makeSymlinks
+
+    echo -e "
+⁍ \e[1;35mv\e[0m      :: Open all matching files with \e[1;35mV\e[0mSCode
+⁍ \e[1;35mc\e[0m      :: \e[1;35mC\e[0mhoose a file to open
+⁍ AnyKey :: Create Symlinks in $TEMPDIR
+"
+
+    openMatches
 
 
-ConcurrentTags=$(tmsu tags)
+}
 
-echo "
-To begin Tag Selection press any key"
-read -d '' -s -n1 continueQ
+function checkDependencies() {
+    command -v rg    >/dev/null 2>&1 || { echo >&2 "I require ripgrep but it's not installed.  Aborting."; exit 1; }
+    command -v sd    >/dev/null 2>&1 || { echo >&2 "I require sd (sed replacement) but it's not installed.  Aborting."; exit 1; }
+    command -v xclip >/dev/null 2>&1 || { echo >&2 "I require xclip but it's not installed.  Aborting."; exit 1; }
+    command -v tmsu  >/dev/null 2>&1 || { echo >&2 "I require TMSU but it's not installed.  Aborting."; exit 1; }
+}
+
+
+function regenTags() {
+    echo -e "
+To begin Tag Selection press any key
+
+r :: regenerate Tags"
+
+    read -d '' -s -n1 continueQ
+
+    if [ "$continueQ" == "r" ]; then
+        ~/bin/tags-to-TMSU.sh
+        exit 0 ## Must Exit because it won't find the tags without restarting.
+    fi
+}
+
+function takeArguments() {
+    if [ "$1" == "-h" ] || [ "$1" == "--help"  ]; then
+        printHelp
+        exit 0
+    elif [[ $1 != '' ]]; then
+        NOTE_DIR=$1
+        cd $NOTE_DIR
+    else
+        NOTE_DIR='./'
+    fi
+
+
+}
+
+function printHelp() {
+    echo "Either Specify the Directory as an argument or it
+    will run in the current Directory, otherwise this is interactive and doesn't
+    provide STDOUT"
+    }
+
+function makeSymlinks() {
+    rm -r $TEMPDIR ## If you want to have or logic for tags, the selections
+                      ## must persist over iterations
+    mkdir $TEMPDIR 2>/dev/null
+
+
+    for i in $MatchingFiles; do
+        ln -s $(realpath $i) /tmp/00tagMatches 2>/dev/null
+    done
+    echo "SymLinks Made in $TEMPDIR"
+}
+
+function openMatches() {
+
+    read -d '' -n1 -s openQ
+
+    if [ "$openQ" == "c" ]; then
+        cd $TEMPDIR
+        ## sk --ansi -i -c 'rg --color=always -l "{}"' --preview "mdcat {}" \
+        ##        --bind pgup:preview-page-up,pgdn:preview-page-down
+        sk --ansi --preview "mdcat {}" \
+            --bind pgup:preview-page-up,pgdn:preview-page-down | \
+            xargs realpath | xargs $DEFAULTAPP -a
+    elif [ "$openQ" == "v" ]; then
+
+        for i in "$MatchingFiles"; do
+
+            code -a $i
+
+        done
+
+    else
+        echo "The following files were symlinked in $TEMPDIR:"
+        echo -e "~~~~~~~~~~~~
+
+            \e[1;34m $(ls $TEMPDIR)\e[0m"
+
+    fi
+}
 
 FilterTags() {
-ChosenTags="$ChosenTags $(echo "$ConcurrentTags" | fzf)"
-MatchingFiles=$(tmsu files "$ChosenTags")
-ConcurrentTags=$(tmsu tags $MatchingFiles | cut -f 2 -d ':' | space2NewLine | sort | uniq | sort -nr )
-ChosenTags=$(echo "$ChosenTags" | space2NewLine | sort -u )
-ConcurrentTags=$(comm -13 <(echo "$ChosenTags" | sort) <(echo "$ConcurrentTags" | sort))
+    ChosenTags="$ChosenTags $(echo "$ConcurrentTags" | fzf)"
+    MatchingFiles=$(tmsu files "$ChosenTags")
+    ConcurrentTags=$(tmsu tags $MatchingFiles | cut -f 2 -d ':' | space2NewLine | sort | uniq | sort -nr )
+    ChosenTags=$(echo "$ChosenTags" | space2NewLine | sort -u )
+    ConcurrentTags=$(comm -13 <(echo "$ChosenTags" | sort) <(echo "$ConcurrentTags" | sort))
 
 
-echo -e "
+    echo -e "
 
 \e[1;32m
 ═══════════════════════════════════════════════════════════════════════════
@@ -59,20 +142,21 @@ $(addBullets "$ConcurrentTags")
 \e[0m
 "
 
-## read -p 'Press t to continue chosing Tags concurrently: ' conTagQ
-echo "To continue filtering by tags concurrently press t
+    ## read -p 'Press t to continue chosing Tags concurrently: ' conTagQ
+    TEMPDIR=/tmp/00tagMatches
+    echo -e "
 
-otherwise press any key to print Matches
 
-TODO to fuzzy chose a returning file press c (fzf --preview highlight {})
+⁍ \e[1;35mt\e[0m      :: Choose Concurrent \e[1;35mT\e[0mags
+⁍ AnyKey :: Accept Chosen Tags \e[1;35mT\e[0mags
 "
 
-read -d '' -n1 -s conTagQ
+    read -d '' -n1 -s conTagQ
 
 
- if [ "$conTagQ" == "t" ]; then
-     FilterTags
- fi
+    if [ "$conTagQ" == "t" ]; then
+        FilterTags
+    fi
 
 }
 
@@ -89,20 +173,14 @@ rmLeadingWS() {
 }
 
 addBullets() {
-    echo "$1" | perl -pe 's/^(?=.)/\tʘ\ /g'
+    echo "$1" | perl -pe 's/^(?=.)/\t‣\ /g'
 }
 
 
-FilterTags
 
-## echo "$MatchingFiles"
 
-mkdir /tmp/00tagMatches
-for i in $MatchingFiles; do
-    ln -s $(realpath $i) /tmp/00tagMatches
-done
+main $1
 
-echo "cd /tmp/00tagMatches"
 exit 0
 
 
@@ -114,8 +192,11 @@ exit 0
   # DONE Should get Bullets and Horizontal Rules
 # DONE Initial Tag
 # DONE Coloured Output
-# TODO Output should be useful
-# TODO fif should use `rg --follow` by default
-    # TODO fimd should use mdcat by default
-    # TODO Empty fif argument should search for anythin.
-    # TODO Nah maybe a Skim Interactive mode would be better?
+# DONE Output should be useful
+# DONE fif should use `rg --follow` by default
+# DONE Should not call code when C-c out
+# DONE Should Cleare Symlink Folder after Running
+# DONE Should the option to regen tags present itself?
+# TODO Restructure
+## Seperate Script
+# DONE fimd should use mdcat by default as well as skim interactive

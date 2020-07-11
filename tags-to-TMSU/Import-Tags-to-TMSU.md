@@ -64,7 +64,8 @@ stow -t $HOME -S tags-to-TMSU
 You can use this from an automatic script, but, but in the unlikely
 scenario where there is *dangerous* text inside your tags (e.g. `rm -rf` or
 `chown -R`) this may cause grief so be careful, I'd probably recommend
-using the individual scripts manually as described below.
+using the individual scripts manually as described below a couple times
+to see if it works for you.
 
 To use the script just call it with the notes directory as the argument,
 alternatively call it in the same location as the notes.
@@ -93,6 +94,15 @@ and unmount with
 ```bash
 tmsu umount ../tags
 ## fusermount -uz ../tags ## If the above fails
+```
+
+### Concurrently filter tags Interactively
+
+If you want to concurrently filter tags use the script and provide the directory
+containing the notes and `.tmsu` as an argument:
+
+```bash
+~/bin/FilterNotesByTMSUTag.sh ~/Notes/
 ```
 
 ## Running the Scripts Manually (Recommended)
